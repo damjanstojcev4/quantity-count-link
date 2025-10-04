@@ -1,4 +1,4 @@
-package com.damjan.quantity_store_link;
+package com.damjan.quantity_store_link.service;
 
 import com.damjan.quantity_store_link.entity.Item;
 import com.damjan.quantity_store_link.repository.ItemRepository;
