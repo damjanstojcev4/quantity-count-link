@@ -17,44 +17,37 @@ public class ItemController {
         this.itemService = itemService;
     }
 
-    // --- Get all items ---
-    @GetMapping
+    @GetMapping("/")
     public List<Item> getAllItems() {
         return itemService.findAll();
     }
 
-    // --- Get single item by SKU ---
     @GetMapping("/{sku}")
     public Item getItemBySku(@PathVariable int sku) {
         return itemService.findBySku(sku)
                 .orElseThrow(() -> new IllegalArgumentException("Item not found with SKU: " + sku));
     }
 
-    // --- Create new item ---
-    @PostMapping
+    @PostMapping("/")
     public Item createItem(@RequestBody Item item) {
         return itemService.save(item);
     }
 
-    // --- Update item by SKU ---
     @PutMapping("/{sku}")
     public Item updateItem(@PathVariable int sku, @RequestBody Item updatedItem) {
         return itemService.updateItem(sku, updatedItem);
     }
 
-    // --- Delete item by SKU ---
     @DeleteMapping("/{sku}")
     public void deleteItem(@PathVariable int sku) {
         itemService.deleteItem(sku);
     }
 
-    // --- Increment quantity ---
     @PatchMapping("/{sku}/increment")
     public Item incrementQuantity(@PathVariable int sku) {
         return itemService.incrementQuantity(sku);
     }
 
-    // --- Decrement quantity ---
     @PatchMapping("/{sku}/decrement")
     public Item decrementQuantity(@PathVariable int sku) {
         return itemService.decrementQuantity(sku);
