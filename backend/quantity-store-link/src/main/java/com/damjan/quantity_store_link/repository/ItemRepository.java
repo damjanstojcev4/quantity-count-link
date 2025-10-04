@@ -8,5 +8,9 @@ import java.util.Optional;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Integer> {
-    Optional<Item> findItemBySku(String sku);
+    Optional<Item> findBySku(int sku);
+
+    boolean existsBySku(int sku);
+
+    void deleteBySku(int sku);
 }
