@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const BACKEND_URL = "http://localhost:8080/api/items";
+const BACKEND_URL = "/api/link/";
 
 const AddItem = () => {
   const [article, setArticle] = useState("");
@@ -16,7 +16,12 @@ const AddItem = () => {
       const res = await fetch(BACKEND_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ article, sku: Number(sku), price: Number(price), quantity: Number(quantity) }),
+        body: JSON.stringify({
+          article,
+          sku: Number(sku),
+          price: Number(price),
+          quantity: Number(quantity),
+        }),
       });
       if (!res.ok) throw new Error(`Failed to add item: ${res.status}`);
       navigate("/");
@@ -26,15 +31,49 @@ const AddItem = () => {
   };
 
   return (
-    <div className="p-4 max-w-md">
-      <h1 className="text-xl mb-4">Add New Item</h1>
-      <form onSubmit={handleSubmit} className="space-y-2">
-        <input type="text" placeholder="Article" value={article} onChange={e => setArticle(e.target.value)} className="w-full border px-2 py-1 rounded" required/>
-        <input type="number" placeholder="SKU" value={sku} onChange={e => setSku(Number(e.target.value))} className="w-full border px-2 py-1 rounded" required/>
-        <input type="number" placeholder="Price" value={price} onChange={e => setPrice(Number(e.target.value))} className="w-full border px-2 py-1 rounded" required/>
-        <input type="number" placeholder="Quantity" value={quantity} onChange={e => setQuantity(Number(e.target.value))} className="w-full border px-2 py-1 rounded" required/>
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Add Item</button>
-      </form>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
+          Додади нов Артикал
+        </h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            placeholder="Артикал"
+            value={article}
+            onChange={(e) => setArticle(e.target.value)}
+            className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+          <input
+            placeholder="Шифра"
+            value={sku}
+            onChange={(e) => setSku(Number(e.target.value))}
+            className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+          <input
+            placeholder="Цена"
+            value={price}
+            onChange={(e) => setPrice(Number(e.target.value))}
+            className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+          <input
+            placeholder="Количина"
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+            className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+          <button
+            type="submit"
+            className="w-full bg-gray-500 text-white py-2 rounded hover:bg-gray-700 transition font-semibold"
+          >
+            Додај
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

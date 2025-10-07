@@ -9,7 +9,7 @@ interface Item {
   quantity: number;
 }
 
-const BACKEND_URL = "http://localhost:8080/api/link";
+const BACKEND_URL = "/api/link";
 
 const ItemList = () => {
   const [items, setItems] = useState<Item[]>([]);
@@ -17,7 +17,7 @@ const ItemList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(BACKEND_URL)
+    fetch(BACKEND_URL + '/')
       .then(res => {
         if (!res.ok) throw new Error("Failed to fetch items");
         return res.json();
@@ -55,11 +55,11 @@ const ItemList = () => {
     <div className="min-h-screen w-full p-4 bg-gray-50 flex flex-col">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
-        <h1 className="text-3xl font-bold">Linkesti</h1>
+        <h1 className="text-3xl font-bold">Линкести</h1>
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full sm:w-auto">
           <input
             type="text"
-            placeholder="Search SKU..."
+            placeholder="Побарај Шифра..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 flex-1"
@@ -68,7 +68,7 @@ const ItemList = () => {
             onClick={handleAdd}
             className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition w-full sm:w-auto"
           >
-            Add Item
+            Додај Артикал
           </button>
         </div>
       </div>
@@ -78,11 +78,11 @@ const ItemList = () => {
         <table className="w-full border-collapse shadow-lg rounded overflow-hidden min-w-[600px]">
           <thead className="bg-gray-300 text-left">
             <tr>
-              <th className="p-3">Article</th>
-              <th className="p-3">SKU</th>
-              <th className="p-3">Price</th>
-              <th className="p-3">Quantity</th>
-              <th className="p-3">Actions</th>
+              <th className="p-3">Артикал</th>
+              <th className="p-3">Шифра</th>
+              <th className="p-3">Цена</th>
+              <th className="p-3">Количина</th>
+              <th className="p-3"></th>
             </tr>
           </thead>
           <tbody>
