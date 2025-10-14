@@ -1,14 +1,24 @@
 services:
   backend:
-    build: ./backend/quantity-store-link
+    build:
+      context: ./backend/quantity-store-link
     container_name: backend
     ports:
       - "8080:8080"
+    networks:
+      - app-network
 
   frontend:
-    build: ./frontend/quantity-count-link
+    build:
+      context: ./frontend/quantity-count-link
     container_name: frontend
     ports:
       - "80:80"
     depends_on:
       - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
