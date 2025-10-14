@@ -51,14 +51,14 @@ const ItemList = () => {
 
   const handleDownload = async () => {
     try {
-      const response = await fetch(`${BACKEND_URL}/report`, { method: "GET" });
+      const response = await fetch(`${BACKEND_URL}/export`, { method: "GET" });
       if (!response.ok) throw new Error("Failed to download Excel file");
 
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = "inventory_report.xlsx";
+      link.download = "zaliha.xlsx";
       document.body.appendChild(link);
       link.click();
       link.remove();
