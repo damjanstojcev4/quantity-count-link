@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const BACKEND_URL = "/api/link/";
+const BACKEND_URL = "/api/link";
 
 const AddItem = () => {
   const [article, setArticle] = useState("");
@@ -13,7 +13,7 @@ const AddItem = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch(BACKEND_URL, {
+      const res = await fetch(BACKEND_URL + '/', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

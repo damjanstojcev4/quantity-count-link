@@ -1,8 +1,12 @@
 package com.damjan.quantity_store_link.controller;
 
 import com.damjan.quantity_store_link.entity.Item;
+import com.damjan.quantity_store_link.service.ExcelReportService;
 import com.damjan.quantity_store_link.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,10 +15,12 @@ import java.util.List;
 @RequestMapping("/link")
 public class ItemController {
     private final ItemService itemService;
+    private final ExcelReportService excelReportService;
 
     @Autowired
-    public ItemController(ItemService itemService) {
+    public ItemController(ItemService itemService, ExcelReportService excelReportService) {
         this.itemService = itemService;
+        this.excelReportService = excelReportService;
     }
 
     @GetMapping("/")
@@ -26,6 +32,20 @@ public class ItemController {
     public Item getItemBySku(@PathVariable int sku) {
         return itemService.findBySku(sku)
                 .orElseThrow(() -> new IllegalArgumentException("Item not found with SKU: " + sku));
+    }
+
+    @GetMapping("/export")
+    public ResponseEntity<byte[]> exportToExcel() {
+        byte[] excelData = excelReportService.exportItemsToExcel();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=zaliha.xlsx");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(excelData);
     }
 
     @PostMapping("/")

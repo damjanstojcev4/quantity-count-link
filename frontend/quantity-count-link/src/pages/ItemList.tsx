@@ -49,6 +49,25 @@ const ItemList = () => {
   const handleEdit = (sku: number) => navigate(`/edit/${sku}`);
   const handleAdd = () => navigate("/add");
 
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/report`, { method: "GET" });
+      if (!response.ok) throw new Error("Failed to download Excel file");
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "inventory_report.xlsx";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Download error:", err);
+    }
+  };
+
   const filteredItems = items.filter(i => i.sku.toString().includes(search));
 
   return (
@@ -69,6 +88,12 @@ const ItemList = () => {
             className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition w-full sm:w-auto"
           >
             Додај Артикал
+          </button>
+          <button
+            onClick={handleDownload}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full sm:w-auto"
+          >
+            Експорт Excel
           </button>
         </div>
       </div>

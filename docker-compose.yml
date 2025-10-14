@@ -1,22 +1,14 @@
 services:
   backend:
-    build:
-      context: ./backend/quantity-store-link
-      dockerfile: Dockerfile
-    container_name: quantity-backend
+    build: ./backend/quantity-store-link
+    container_name: backend
     ports:
       - "8080:8080"
-    volumes:
-      - ./backend/quantity-store-link/data:/app/data
-    restart: always
 
   frontend:
-    build:
-      context: ./frontend/quantity-count-link
-      dockerfile: Dockerfile
-    container_name: quantity-frontend
+    build: ./frontend/quantity-count-link
+    container_name: frontend
     ports:
-      - "5173:80"
+      - "80:80"
     depends_on:
       - backend
-    restart: always

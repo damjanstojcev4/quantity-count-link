@@ -44,7 +44,7 @@ const EditItem = () => {
   };
 
   const handleDelete = async () => {
-    if (!confirm(`Are you sure you want to delete SKU ${sku}?`)) return;
+    if (!confirm(`Дали сте сигурни дека сакате да ја избришете шифра ${sku}?`)) return;
     try {
       const res = await fetch(`${BACKEND_URL}/${sku}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Failed to delete");
@@ -57,60 +57,67 @@ const EditItem = () => {
   if (!item)
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <p className="text-gray-500 text-lg">Loading item...</p>
+        <p className="text-gray-500 text-lg">Се вчитува артиклот...</p>
       </div>
     );
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
-          Артикал со Шифра: {sku}
-        </h1>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
+      <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-6">
+        {/* Header with Back button */}
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-semibold text-gray-800">
+            Уреди Артикал #{sku}
+          </h1>
+          <button
+            onClick={() => navigate("/")}
+            className="text-sm text-blue-600 bg-blue-100 px-6 py-2 rounded hover:bg-blue-200 transition"
+          >
+            ← Назад
+          </button>
+        </div>
+
+        {/* Form */}
         <form onSubmit={handleUpdate} className="space-y-4">
           <input
             type="text"
-            placeholder="Article"
+            placeholder="Артикал"
             value={item.article}
-            onChange={(e) =>
-              setItem({ ...item, article: e.target.value })
-            }
+            onChange={(e) => setItem({ ...item, article: e.target.value })}
             className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
             required
           />
           <input
             type="number"
-            placeholder="Price"
+            placeholder="Цена"
             value={item.price}
-            onChange={(e) =>
-              setItem({ ...item, price: Number(e.target.value) })
-            }
+            onChange={(e) => setItem({ ...item, price: Number(e.target.value) })}
             className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
             required
           />
           <input
             type="number"
-            placeholder="Quantity"
+            placeholder="Количина"
             value={item.quantity}
-            onChange={(e) =>
-              setItem({ ...item, quantity: Number(e.target.value) })
-            }
+            onChange={(e) => setItem({ ...item, quantity: Number(e.target.value) })}
             className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
             required
           />
-          <div className="flex justify-between gap-4">
+
+          {/* Buttons */}
+          <div className="flex justify-between gap-4 mt-6">
             <button
               type="submit"
-              className="flex-1 bg-gray-500 text-white py-2 rounded hover:bg-gray-700 transition font-semibold"
+              className="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition font-semibold"
             >
-              Update
+              Зачувај
             </button>
             <button
               type="button"
               onClick={handleDelete}
-              className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 transition font-semibold"
+              className="flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition font-semibold"
             >
-              Бриши
+              Избриши
             </button>
           </div>
         </form>
