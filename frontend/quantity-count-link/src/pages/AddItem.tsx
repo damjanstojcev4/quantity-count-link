@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const BACKEND_URL = "/api/link";
+const BACKEND_URL = "http://backend:8080/link";
 
 const AddItem = () => {
   const [article, setArticle] = useState("");
