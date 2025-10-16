@@ -9,7 +9,7 @@ interface Item {
   quantity: number;
 }
 
-const BACKEND_URL = "/api/link";
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 
 const ItemList = () => {
   const [items, setItems] = useState<Item[]>([]);

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import type { Item } from "../types";
 
-const BACKEND_URL = "/api/link";
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 
 const EditItem = () => {
   const { sku } = useParams<{ sku: string }>();
